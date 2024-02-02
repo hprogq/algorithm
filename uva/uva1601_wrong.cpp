@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <tuple>
 #include <queue>
-#include <unordered_set>
+#include <cstring>
+#include <set>
 using namespace std;
 
 typedef pair<int, int> pir;
@@ -51,7 +52,7 @@ int main() {
             }
         
         queue<st> q;
-        unordered_set<grp> v;
+        set<grp> v;
         grp f = mkg( n, from[0], from[1], from[2] ), t = mkg( n, to[0], to[1], to[2] );
         q.push( st(0, f) );  v.insert(f);
         while ( !q.empty() ) {
