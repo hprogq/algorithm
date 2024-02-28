@@ -1,24 +1,20 @@
 #include <iostream>
-#include <cmath>
 using namespace std;
-
+const long double eps = 1e-8;
 int main() {
-    double x;
-    scanf("%lf", &x);
-    
-    if ( x < 0 ) {
-        printf("-");
-        x = -x;
-    }
-
-    double l = abs(x) < 1 ? x : 0, r = abs(x) < 1 ? 1 : x;
-    
-    while ( r - l > 1e-8 ) {
-        double mid = ( l + r ) / 2;
-        if ( mid * mid * mid > x )  r = mid;
+#ifdef LOCAL
+    freopen("temp.in", "r", stdin);
+    freopen("temp.out", "w", stdout);
+#endif
+    long double n;
+    scanf("%Lf", &n);
+    long double l = -22, r = 22;
+    while ( r - l > eps ) {
+        long double mid = ( l + r ) / 2;
+        if ( mid * mid * mid >= n )
+            r = mid;
         else l = mid;
     }
-    
-    printf("%lf\n", l);
+    printf("%.6Lf", l);
     return 0;
 }
