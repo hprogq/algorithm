@@ -1,11 +1,12 @@
 #include <iostream>
-#include <cstdio>
 using namespace std;
-const int N = 1e6 + 10;
+const int N = 1e5 + 10;
+char op[2];
+int n, m, p[N], a, b;
 
-int find( int p[N], int x ) {
+int find( int x ) {
     if ( p[x] != x )
-        p[x] = find(p, p[x]);
+        p[x] = find( p[x] );
     return p[x];
 }
 
@@ -14,22 +15,15 @@ int main() {
     freopen("temp.in", "r", stdin);
     freopen("temp.out", "w", stdout);
 #endif
-    int n, m;
-    scanf("%d %d\n", &n, &m);
-    int p[N] = { 0 };
+    scanf("%d%d", &n, &m);
     for ( int i = 1; i <= n; i ++ )
         p[i] = i;
     while ( m -- ) {
-        char op;
-        int a, b;
-        scanf("%c %d %d\n", &op, &a, &b);
-        if ( op == 'M' )
-            p[ find(p, a) ] = find(p, b);
-        else if ( op == 'Q' ) {
-            if ( find(p, a) == find(p, b) )
-                printf("Yes\n");
-            else printf("No\n");
-        }
+        scanf("%s%d%d", op, &a, &b);
+        if ( *op == 'M' )
+            p[ find(a) ] = find(b);
+        else if ( *op == 'Q' )
+            puts( find(a) == find(b) ? "Yes" : "No" );
     }
     return 0;
 }

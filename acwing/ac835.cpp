@@ -1,35 +1,32 @@
 #include <iostream>
-#include <cstdio>
+#include <cstring>
 using namespace std;
-const int N = 1e5 + 10;
+const int N = 2e4 + 10, L = 1e5 + 10;
 int main() {
-    int n, son[N][26], cnt[N], idx = 0;
-    scanf("%d", &n);
-    while ( n -- ) {
-        char op, str[N];
-        scanf("%c %s", &op, str);
-        if ( op == 'I' ) {
-            int p = 0;
-            for ( int i = 0; str[i]; i ++ ) {
-                int u = str[i] - 'a';
-                if ( !son[p][u] )  son[p][u] = ++ idx;
-                p = son[p][u];
-                cnt[p] ++;
+#ifdef LOCAL
+    freopen("temp.in", "r", stdin);
+    freopen("temp.out", "w", stdout);
+#endif
+    int v, id = 0, son[N][26] = {0}, cnt[N] = {0}, i, p = 0;;
+    char str[L], op[2];
+    scanf("%d", &v);
+    while ( v -- ) {
+        scanf("%s%s", op, str);
+        if ( *op == 'I' ) {
+            for ( i = 0, p = 0; i < strlen(str); i ++ ) {
+                if ( !son[p][ str[i] - 'a' ] )
+                    son[p][ str[i] - 'a' ] = ++ id;
+                p = son[p][ str[i] - 'a' ];
             }
-        } else if ( op == 'Q' ) {
-            int p = 0;
-            bool s = true;
-            for ( int i = 0; str[i]; i ++ ) {
-                int u = str[i] - 'a';
-                if ( !son[p][u] ) {
-                    s = false;
+            cnt[p] ++;
+        } else if ( *op == 'Q' ) {
+            for ( i = 0, p = 0; i < strlen(str); i ++ ) {
+                if ( !son[p][ str[i] - 'a' ] ) {
+                    p = 0;
                     break;
-                }
-                p = son[p][u];
+                } else p = son[p][ str[i] - 'a' ];
             }
-            if ( !s )
-                printf("0\n");
-            else printf("%d\n", cnt[p]);
+            printf("%d\n", cnt[p]);
         }
     }
     return 0;
